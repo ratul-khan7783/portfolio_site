@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Control Panel | Admin Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #07080c !important;
+            background-image: 
+                radial-gradient(at 15% 25%, rgba(99, 102, 241, 0.28) 0px, transparent 55%),
+                radial-gradient(at 85% 65%, rgba(168, 85, 247, 0.25) 0px, transparent 55%),
+                radial-gradient(at 50% 10%, rgba(14, 165, 233, 0.20) 0px, transparent 45%) !important;
+            background-attachment: fixed !important;
+            color: #fff;
+        body {
+            background-color: #07080c !important;
+            background-image: 
+                radial-gradient(at 15% 25%, rgba(99, 102, 241, 0.28) 0px, transparent 55%),
+                radial-gradient(at 85% 65%, rgba(168, 85, 247, 0.25) 0px, transparent 55%),
+                radial-gradient(at 50% 10%, rgba(14, 165, 233, 0.20) 0px, transparent 45%) !important;
+            background-attachment: fixed !important;
+            color: #fff;
+            padding-bottom: 7rem;
+        }
+
+        /* Combined Master Top Dynamic Island Header Navbar */
+        .admin-master-header-container {
+            position: sticky; top: 1.2rem; left: 0; right: 0; width: 100%; z-index: 10000;
+            pointer-events: none;
+            display: flex; justify-content: center; align-items: center;
+            padding: 0 1rem; margin-bottom: 2rem;
+        }
+
+        .admin-master-header-nav {
+            pointer-events: auto;
+            width: 100%;
+            max-width: 1440px !important;
+            padding: 0.6rem 1.2rem !important;
+            background: rgba(8, 9, 14, 0.92) !important;
+            backdrop-filter: blur(36px) saturate(220%) !important;
+            -webkit-backdrop-filter: blur(36px) saturate(220%) !important;
+            border: 1.5px solid rgba(0, 240, 255, 0.5) !important;
+            border-radius: 100px !important;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.95),
+                0 0 35px rgba(0, 240, 255, 0.35),
+                inset 0 1.5px 0.5px rgba(255, 255, 255, 0.45) !important;
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: visible !important;
+            animation: constantIslandGlow 4s infinite ease-in-out !important;
+        }
+
+        .admin-brand {
+            display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0;
+        }
+
+        .brand-pulse-dot {
+            width: 9px; height: 9px; background: #00F0FF; border-radius: 50%;
+            box-shadow: 0 0 10px #00F0FF, 0 0 20px #00F0FF;
+            animation: dynamicIslandPulse 2s infinite ease-in-out;
+        }
+
+        .brand-title {
+            font-size: 0.95rem; font-weight: 800; color: #ffffff; letter-spacing: 1px;
+            text-shadow: 0 0 12px rgba(0, 240, 255, 0.8); white-space: nowrap;
+        }
+
+        .admin-main-container {
+            max-width: 1100px; margin: 1rem auto 4rem auto; padding: 0 1.5rem;
+        }
+
+        .admin-tabs {
+            display: flex !important;
+            gap: 0.25rem !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            flex: 1 !important;
+        }
+
+        .admin-tabs::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        .admin-tab-btn {
+            position: relative !important;
+            padding: 0.4rem 0.85rem !important;
+            border-radius: 100px !important;
+            border: 1px solid transparent !important;
+            color: rgba(255, 255, 255, 0.75) !important;
+            background: transparent !important;
+            font-size: 0.76rem !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            cursor: pointer !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            flex-shrink: 0 !important;
+        }
+
+        .admin-tab-btn:hover {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .admin-tab-btn.active {
+            color: #00F0FF !important;
+            background: rgba(0, 240, 255, 0.16) !important;
+            border: 1px solid rgba(0, 240, 255, 0.5) !important;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.6) !important;
+        }
+
+        .admin-live-link { flex-shrink: 0; }
+
+        .btn-live-site {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            color: #ffffff !important;
+            padding: 0.45rem 1.1rem !important;
+            border-radius: 100px !important;
+            font-size: 0.78rem !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            display: inline-flex; align-items: center; gap: 4px;
+            transition: all 0.25s ease !important;
+            white-space: nowrap !important;
+        }
+
+        .btn-live-site:hover {
+            background: rgba(0, 240, 255, 0.2) !important;
+            border-color: #00F0FF !important;
+            color: #00F0FF !important;
+            box-shadow: 0 0 18px rgba(0, 240, 255, 0.4) !important;
+        }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: heroFadeUp 0.4s ease forwards; }
+
+        /* Lighter Frosted Glass Panels */
+        .admin-card-panel {
+            background: rgba(255, 255, 255, 0.04) !important;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.14) !important;
+            border-radius: 24px; padding: 2.5rem; margin-bottom: 2rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .admin-card-panel:hover {
+            border-color: rgba(0, 240, 255, 0.3) !important;
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.12), 0 25px 60px rgba(0,0,0,0.5) !important;
+        }
+
+        .admin-card-panel h3 {
+            font-size: 1.35rem; font-weight: 800; margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.8rem;
+            background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 75%, #64748b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+        .form-group.full { grid-column: 1 / -1; }
+        label { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; }
+        .help-txt { font-size: 0.78rem; color: #94a3b8; margin-top: -0.2rem; }
+
+        /* File Upload Picker Styling */
+        .video-upload-box {
+            display: flex; gap: 0.8rem; align-items: center; width: 100%;
+        }
+
+        .file-upload-btn {
+            background: rgba(0, 240, 255, 0.12);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            color: #00F0FF; font-size: 0.82rem; font-weight: 700;
+            padding: 0.85rem 1.1rem; border-radius: 14px; cursor: pointer;
+            white-space: nowrap; transition: all 0.25s ease; flex-shrink: 0;
+        }
+
+        .file-upload-btn:hover {
+            background: #00F0FF; color: #000; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Sharp Lighter Translucent Inputs */
+        input[type="text"], textarea, select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #ffffff; font-family: inherit; font-size: 0.92rem;
+            padding: 0.85rem 1.1rem; border-radius: 14px;
+            transition: all 0.25s ease; outline: none; width: 100%;
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #00F0FF;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.35), inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        textarea { min-height: 90px; resize: vertical; }
+
+        .repeater-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px; padding: 1.5rem; margin-bottom: 1.2rem;
+            position: relative; backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .delete-repeater-btn {
+            position: absolute; top: 1rem; right: 1rem;
+            background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #ef4444; border-radius: 8px; padding: 0.35rem 0.8rem; font-size: 0.78rem; cursor: pointer; font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .delete-repeater-btn:hover { background: #ef4444; color: #fff; }
+
+        .add-row-btn {
+            background: rgba(0, 240, 255, 0.06); border: 1.5px dashed rgba(0, 240, 255, 0.4);
+            color: #00F0FF; width: 100%; padding: 0.95rem; border-radius: 14px; font-weight: 700; cursor: pointer; transition: all 0.25s;
+        }
+
+        .add-row-btn:hover { background: rgba(0, 240, 255, 0.16); border-color: #00F0FF; box-shadow: 0 0 20px rgba(0, 240, 255, 0.25); }
+
+        .visibility-toggle-label {
+            display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 700; color: #00F0FF; cursor: pointer;
+            background: rgba(0, 240, 255, 0.08); padding: 0.4rem 0.9rem; border-radius: 50px; border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .sticky-footer-bar {
+            position: fixed !important;
+            bottom: 1.4rem !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 10000 !important;
+            width: 90% !important;
+            max-width: 680px !important;
+            padding: 0.5rem 0.8rem 0.5rem 1.4rem !important;
+            background: rgba(8, 9, 14, 0.88) !important;
+            backdrop-filter: blur(36px) saturate(220%) !important;
+            -webkit-backdrop-filter: blur(36px) saturate(220%) !important;
+            border: 1.5px solid rgba(0, 240, 255, 0.5) !important;
+            border-radius: 100px !important;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.95),
+                0 0 35px rgba(0, 240, 255, 0.35),
+                inset 0 1.5px 0.5px rgba(255, 255, 255, 0.45) !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            gap: 0.8rem !important;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #00F0FF 0%, #0099FF 100%) !important;
+            color: #05070d !important;
+            padding: 0.5rem 1.25rem !important;
+            border-radius: 100px !important;
+            border: none !important;
+            font-size: 0.8rem !important;
+            font-weight: 800 !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-1px) scale(1.03) !important;
+            box-shadow: 0 6px 25px rgba(0, 240, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .btn-export {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: #ffffff !important;
+            padding: 0.45rem 1.1rem !important;
+            border-radius: 100px !important;
+            font-size: 0.78rem !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .btn-export:hover {
+            background: rgba(255, 255, 255, 0.18) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.25) !important;
+        }
+
+        .btn-reset {
+            background: rgba(239, 68, 68, 0.12) !important;
+            border: 1px solid rgba(239, 68, 68, 0.35) !important;
+            color: #ef4444 !important;
+            padding: 0.45rem 1.1rem !important;
+            border-radius: 100px !important;
+            font-size: 0.78rem !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            text-decoration: none !important;
+        }
+
+        .btn-reset:hover {
+            background: rgba(239, 68, 68, 0.25) !important;
+            border-color: #ef4444 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
+        }
+
+        .toast-notify {
+            position: fixed; top: 80px; right: 20px; z-index: 10000;
+            background: rgba(0, 240, 255, 0.2); border: 1px solid #00F0FF; color: #fff;
+            padding: 1rem 1.8rem; border-radius: 14px; backdrop-filter: blur(16px);
+            font-weight: 700; display: none; box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        /* NO-CODE VISUAL TEXT HIGHLIGHT BUILDER STYLES */
+        .visual-highlight-box {
+            background: rgba(18, 19, 24, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-top: 0.8rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .hl-controls-row {
+            display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.8rem;
+        }
+
+        .hl-box-lbl {
+            font-size: 0.82rem; font-weight: 800; color: #00F0FF;
+        }
+
+        .target-word-input {
+            flex: 1; min-width: 220px;
+            background: rgba(7, 8, 12, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            color: #fff !important;
+            padding: 0.55rem 0.9rem !important;
+            border-radius: 8px !important;
+            font-size: 0.85rem !important;
+        }
+
+        .hl-btn {
+            border: 1px solid transparent;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .hl-btn.cyan-hl {
+            background: rgba(0, 240, 255, 0.15); color: #00F0FF; border-color: rgba(0, 240, 255, 0.4);
+        }
+        .hl-btn.cyan-hl:hover {
+            background: rgba(0, 240, 255, 0.3); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .hl-btn.shimmer-hl {
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(203,213,225,0.25));
+            color: #ffffff; border-color: rgba(255, 255, 255, 0.3);
+        }
+        .hl-btn.shimmer-hl:hover { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+
+        .hl-btn.gold-hl {
+            background: rgba(245, 158, 11, 0.15); color: #F59E0B; border-color: rgba(245, 158, 11, 0.4);
+        }
+        .hl-btn.gold-hl:hover {
+            background: rgba(245, 158, 11, 0.3); box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .hl-btn.purple-hl {
+            background: rgba(168, 85, 247, 0.15); color: #A855F7; border-color: rgba(168, 85, 247, 0.4);
+        }
+        .hl-btn.purple-hl:hover {
+            background: rgba(168, 85, 247, 0.3); box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .hl-btn.white-hl {
+            background: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.25);
+        }
+        .hl-btn.white-hl:hover { background: rgba(255, 255, 255, 0.2); }
+
+        .hl-btn.clear-hl {
+            background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);
+        }
+        .hl-btn.clear-hl:hover { background: #ef4444; color: #fff; }
+
+        .live-preview-wrapper {
+            margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-lbl {
+            font-size: 0.72rem; font-weight: 800; color: #94a3b8; display: block; margin-bottom: 6px;
+        }
+
+        .live-preview-render {
+            font-size: 1.05rem; font-weight: 700; color: #ffffff;
+            padding: 0.8rem 1rem; background: rgba(7, 8, 12, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; min-height: 2.4rem;
+        }
+
+        /* Span Highlight styles in admin preview */
+        .highlight-cyan { color: #00F0FF !important; font-weight: 800; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #ffffff 0%, #00F0FF 50%, #ffffff 100%);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .highlight-gold { color: #F59E0B !important; font-weight: 800; text-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
+        .highlight-purple { color: #A855F7 !important; font-weight: 800; text-shadow: 0 0 12px rgba(168, 85, 247, 0.5); }
+        .highlight-white { color: #ffffff !important; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Rich Luminous Mesh Gradient Canvas -->
+    <div class="ambient-canvas">
+        <div class="color-blob blob-indigo"></div>
+        <div class="color-blob blob-cyan"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <div class="toast-notify" id="toast">✅ Changes Saved to Live Site!</div>
+
+    <!-- Combined Master Floating Top Dynamic Island Header Navbar -->
+    <div class="admin-master-header-container">
+        <header class="admin-master-header-nav">
+            <!-- Left: Animated Glowing Admin Panel Title -->
+            <div class="admin-brand">
+                <div class="brand-pulse-dot"></div>
+                <span class="brand-title">ADMIN PANEL</span>
+            </div>
+
+            <!-- Center: Category Navigation Tabs -->
+            <nav class="admin-tabs">
+                <button class="admin-tab-btn active" data-tab="tab-hero">⚡ Hero</button>
+                <button class="admin-tab-btn" data-tab="tab-about">💬 About</button>
+                <button class="admin-tab-btn" data-tab="tab-anatomy">🎬 Reels</button>
+                <button class="admin-tab-btn" data-tab="tab-services">🛠️ Capabilities</button>
+                <button class="admin-tab-btn" data-tab="tab-vault">🚀 Vault</button>
+                <button class="admin-tab-btn" data-tab="tab-reviews">⭐ Reviews</button>
+                <button class="admin-tab-btn" data-tab="tab-contact" style="border: 1px solid rgba(0, 240, 255, 0.5) !important; background: rgba(0, 240, 255, 0.12) !important; color: #00F0FF !important;">📧 Email, CTA & Socials</button>
+            </nav>
+
+            <!-- Right: View Live Site CTA -->
+            <div class="admin-live-link">
+                <a href="index.html" target="_blank" class="btn-live-site">
+                    <span>View Live Site ↗</span>
+                </a>
+            </div>
+        </header>
+    </div>
+
+    <main class="admin-main-container">
+
+        <!-- TAB 1: HERO SECTION -->
+        <div class="tab-panel active" id="tab-hero">
+            <div class="admin-card-panel">
+                <h3>⚡ Main Hero Copy & Accents</h3>
+                <div class="form-group">
+                    <label>Hero Kicker Badge Text</label>
+                    <input type="text" id="hero-badge-input" placeholder="✦ CREATIVE & PERFORMANCE VIDEO PARTNER">
+                </div>
+                <div class="form-group full">
+                    <label>Headline Text</label>
+                    <input type="text" id="hero-headline-input" oninput="onRichTextInput('hero-headline-input')">
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="hero-headline-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('hero-headline-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('hero-headline-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('hero-headline-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('hero-headline-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('hero-headline-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('hero-headline-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="hero-headline-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Subline Text</label>
+                    <textarea id="hero-subline-input" oninput="onRichTextInput('hero-subline-input')"></textarea>
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="hero-subline-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('hero-subline-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('hero-subline-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('hero-subline-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('hero-subline-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('hero-subline-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('hero-subline-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="hero-subline-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card-panel">
+                <h3>📊 Hero Metric Pills</h3>
+                <div id="hero-metrics-repeater"></div>
+                <button class="add-row-btn" id="add-metric-btn">+ Add Metric Pill</button>
+            </div>
+
+            <div class="admin-card-panel">
+                <h3>🃏 Hero 3D Deck Video Reels</h3>
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label>Left Card Video</label>
+                        <div class="video-upload-box">
+                            <input type="text" id="deck-left-video" placeholder="videos/High retention vsl ads video.mp4">
+                            <button class="file-upload-btn" onclick="triggerFilePick('deck-left-video')">📁 Choose from PC</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Center Active Card Video</label>
+                        <div class="video-upload-box">
+                            <input type="text" id="deck-center-video" placeholder="videos/0510.mp4">
+                            <button class="file-upload-btn" onclick="triggerFilePick('deck-center-video')">📁 Choose from PC</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Right Card Video</label>
+                        <div class="video-upload-box">
+                            <input type="text" id="deck-right-video" placeholder="videos/The no 1.mp4">
+                            <button class="file-upload-btn" onclick="triggerFilePick('deck-right-video')">📁 Choose from PC</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: ABOUT PHILOSOPHY -->
+        <div class="tab-panel" id="tab-about">
+            <div class="admin-card-panel">
+                <h3>💬 About Philosophy Section</h3>
+                <div class="form-group">
+                    <label>Section Kicker Tag</label>
+                    <input type="text" id="about-kicker-input" placeholder="PERFORMANCE PHILOSOPHY">
+                </div>
+                <div class="form-group full">
+                    <label>Main Headline</label>
+                    <input type="text" id="about-title-input" oninput="onRichTextInput('about-title-input')">
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="about-title-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('about-title-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('about-title-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('about-title-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('about-title-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('about-title-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('about-title-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="about-title-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Philosophy Paragraph Copy</label>
+                    <textarea id="about-text-input" style="min-height: 120px;" oninput="onRichTextInput('about-text-input')"></textarea>
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="about-text-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('about-text-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('about-text-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('about-text-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('about-text-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('about-text-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('about-text-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="about-text-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: ANATOMY OF RETENTION (PROJECTS) -->
+        <div class="tab-panel" id="tab-anatomy">
+            <div class="admin-card-panel">
+                <h3>🎬 Anatomy of Retention Reels (Dynamic Projects List)</h3>
+                <p class="help-txt" style="margin-bottom: 1.5rem;">Add as many projects as you want. They render side-by-side (3 in a row) and auto-adjust as more are added!</p>
+                
+                <div id="projects-repeater"></div>
+                <button class="add-row-btn" id="add-project-btn">+ Add New Project Breakdown</button>
+            </div>
+        </div>
+
+        <!-- TAB 4: CAPABILITIES -->
+        <div class="tab-panel" id="tab-services">
+            <div class="admin-card-panel">
+                <h3>⚡ Section Header Copy</h3>
+                <div class="form-group">
+                    <label>Section Kicker Tag</label>
+                    <input type="text" id="services-kicker-input" placeholder="PERFORMANCE SYSTEMS">
+                </div>
+                <div class="form-group full">
+                    <label>Main Section Title</label>
+                    <input type="text" id="services-title-input" oninput="onRichTextInput('services-title-input')" placeholder="A Creative Engine Built For Scale">
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="services-title-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('services-title-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('services-title-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('services-title-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('services-title-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('services-title-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('services-title-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="services-title-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Section Subline Copy</label>
+                    <textarea id="services-subline-input" oninput="onRichTextInput('services-subline-input')" style="min-height: 80px;" placeholder="Direct-response video framework engineered to scale ad spend efficiently across platforms."></textarea>
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="services-subline-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('services-subline-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('services-subline-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('services-subline-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('services-subline-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('services-subline-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('services-subline-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="services-subline-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card-panel">
+                <h3>🛠️ Performance Systems Cards (4 Side-by-Side Cards)</h3>
+                <div id="services-repeater"></div>
+                <button class="add-row-btn" id="add-service-btn">+ Add Capability Card</button>
+            </div>
+        </div>
+
+        <!-- TAB 5: CREATIVE VAULT -->
+        <div class="tab-panel" id="tab-vault">
+            <div class="admin-card-panel">
+                <h3>⚡ Section Header Copy</h3>
+                <div class="form-group">
+                    <label>Section Kicker Tag</label>
+                    <input type="text" id="vault-kicker-input" placeholder="THE CREATIVE VAULT">
+                </div>
+                <div class="form-group full">
+                    <label>Main Section Title</label>
+                    <input type="text" id="vault-title-input" oninput="onRichTextInput('vault-title-input')" placeholder="Creative Velocity & Testing">
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="vault-title-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('vault-title-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('vault-title-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('vault-title-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('vault-title-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('vault-title-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('vault-title-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="vault-title-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Section Subline Copy</label>
+                    <textarea id="vault-subline-input" oninput="onRichTextInput('vault-subline-input')" style="min-height: 80px;" placeholder="Attention is finite. Creative testing requires speed..."></textarea>
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="vault-subline-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('vault-subline-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('vault-subline-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('vault-subline-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('vault-subline-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('vault-subline-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('vault-subline-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="vault-subline-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card-panel">
+                <h3>🚀 Creative Velocity Vault Videos</h3>
+                <div id="vault-repeater"></div>
+                <button class="add-row-btn" id="add-vault-btn">+ Add Vault Video Path</button>
+            </div>
+        </div>
+
+        <!-- TAB 6: CLIENT REVIEWS & VISIBILITY -->
+        <div class="tab-panel" id="tab-reviews">
+            <div class="admin-card-panel">
+                <h3>⭐ Client Proof & Reviews Manager</h3>
+                <p class="help-txt" style="margin-bottom: 1.5rem;">Choose which client reviews to show/hide on the live site or delete any review completely.</p>
+                <div id="reviews-repeater"></div>
+                <button class="add-row-btn" id="add-review-btn">+ Add Client Review</button>
+            </div>
+        </div>
+
+        <!-- TAB 7: EMAIL, CTA & SOCIALS -->
+        <div class="tab-panel" id="tab-contact">
+            <div class="admin-card-panel">
+                <h3>📧 Admin Email & Booking Links</h3>
+                <p class="help-txt" style="margin-bottom: 1.2rem; color: #00F0FF;">💡 Update your contact email address below. All strategy brief inquiry notifications submitted on the website will be automatically sent to this email address.</p>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Direct Contact Email (Admin Notification Target)</label>
+                        <input type="text" id="contact-email-input" placeholder="khanratul201258@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Calendly / Booking Link</label>
+                        <input type="text" id="contact-calendly-input" placeholder="https://calendly.com">
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card-panel">
+                <h3>🚀 CTA Section & Bottom Banner Copy</h3>
+                <div class="form-group">
+                    <label>Section Kicker Tag</label>
+                    <input type="text" id="cta-kicker-input" placeholder="READY TO SCALE YOUR CREATIVE?">
+                </div>
+                <div class="form-group full">
+                    <label>Main CTA Headline Title</label>
+                    <input type="text" id="cta-title-input" oninput="onRichTextInput('cta-title-input')" placeholder="Let me Engineer Your Next Winner.">
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="cta-title-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('cta-title-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('cta-title-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('cta-title-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('cta-title-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('cta-title-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('cta-title-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="cta-title-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>CTA Subline Description Copy</label>
+                    <textarea id="cta-subline-input" oninput="onRichTextInput('cta-subline-input')" style="min-height: 80px;" placeholder="Send me your raw footage or current ad campaign..."></textarea>
+                    
+                    <div class="visual-highlight-box">
+                        <div class="hl-controls-row">
+                            <span class="hl-box-lbl">🎨 Text Highlight & Color Picker:</span>
+                            <input type="text" id="cta-subline-input-target" class="target-word-input" placeholder="Type word(s) to highlight (or select text above)...">
+                            <button type="button" class="hl-btn cyan-hl" onclick="applyHighlight('cta-subline-input', 'cyan')">✨ Cyan Glow</button>
+                            <button type="button" class="hl-btn shimmer-hl" onclick="applyHighlight('cta-subline-input', 'shimmer')">💎 Metallic Shimmer</button>
+                            <button type="button" class="hl-btn gold-hl" onclick="applyHighlight('cta-subline-input', 'gold')">🏆 Gold Glow</button>
+                            <button type="button" class="hl-btn purple-hl" onclick="applyHighlight('cta-subline-input', 'purple')">💜 Purple</button>
+                            <button type="button" class="hl-btn white-hl" onclick="applyHighlight('cta-subline-input', 'white')">🤍 Bold White</button>
+                            <button type="button" class="hl-btn clear-hl" onclick="removeHighlights('cta-subline-input')">🧹 Clear</button>
+                        </div>
+                        <div class="live-preview-wrapper">
+                            <span class="preview-lbl">👁️ LIVE RENDER PREVIEW:</span>
+                            <div id="cta-subline-input-preview" class="live-preview-render"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>CTA Button Text</label>
+                    <input type="text" id="cta-button-text-input" placeholder="Start The Conversation">
+                </div>
+            </div>
+
+            <div class="admin-card-panel">
+                <h3>🔗 Social Media Links</h3>
+                <div id="socials-repeater"></div>
+                <button class="add-row-btn" id="add-social-btn">+ Add Social Link</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Hidden Master PC File Input Picker -->
+    <input type="file" id="master-file-picker" accept="video/*,image/*" style="display:none;">
+
+    <!-- Sticky Bottom Control Action Bar -->
+    <footer class="sticky-footer-bar">
+        <div>
+            <button class="btn-reset" id="btn-reset">↺ Reset to Default Config</button>
+        </div>
+        <div style="display:flex; gap: 1rem; align-items: center;">
+            <button class="btn-export" id="btn-export">📥 Download Updated config.js</button>
+            <button class="btn-save" id="btn-save">💾 Save to Live Site</button>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script>
+        let currentConfig = JSON.parse(JSON.stringify(typeof siteConfig !== 'undefined' ? siteConfig : {}));
+        let activeTargetInputId = null;
+
+        window.triggerFilePick = function(targetInputId) {
+            activeTargetInputId = targetInputId;
+            const picker = document.getElementById('master-file-picker');
+            if (picker) picker.click();
+        };
+
+        const saved = localStorage.getItem('my_site_config');
+        if (saved) {
+            try { 
+                const parsed = JSON.parse(saved);
+                if (parsed.about && parsed.about.title && parsed.about.title.includes('Stop Losing 90%')) {
+                    delete parsed.about;
+                }
+                currentConfig = parsed;
+            } catch(e){}
+        }
+
+        const formattedDataStore = {};
+
+        function stripHtml(html) {
+            if (!html) return '';
+            const tmp = document.createElement('DIV');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
+
+        function initRichTextInput(inputId, initialHTML) {
+            formattedDataStore[inputId] = initialHTML || '';
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.value = stripHtml(initialHTML);
+            }
+            window.updatePreview(inputId);
+        }
+
+        window.onRichTextInput = function(inputId) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            const plainVal = input.value;
+            if (stripHtml(formattedDataStore[inputId]) !== plainVal) {
+                formattedDataStore[inputId] = plainVal;
+            }
+            window.updatePreview(inputId);
+        };
+
+        window.applyHighlight = function(inputId, styleType) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+            const fullText = input.value;
+            const selectedText = fullText.substring(start, end);
+
+            let spanClass = '';
+            if (styleType === 'cyan') spanClass = 'highlight-cyan';
+            else if (styleType === 'shimmer') spanClass = 'text-gradient shimmer-text';
+            else if (styleType === 'gold') spanClass = 'highlight-gold';
+            else if (styleType === 'purple') spanClass = 'highlight-purple';
+            else if (styleType === 'white') spanClass = 'highlight-white';
+
+            let wordToHighlight = '';
+            if (selectedText && selectedText.trim() !== '') {
+                wordToHighlight = selectedText.trim();
+            } else {
+                const targetInput = document.getElementById(inputId + '-target');
+                if (targetInput && targetInput.value.trim() !== '') {
+                    wordToHighlight = targetInput.value.trim();
+                    targetInput.value = '';
+                } else {
+                    alert('Please select text with your mouse cursor inside the text box, or type target word(s) in the box!');
+                    return;
+                }
+            }
+
+            if (!fullText.includes(wordToHighlight)) {
+                alert(`The phrase "${wordToHighlight}" was not found in the text box!`);
+                return;
+            }
+
+            let currentHTML = formattedDataStore[inputId] || fullText;
+            if (!stripHtml(currentHTML).includes(wordToHighlight)) {
+                currentHTML = fullText;
+            }
+
+            if (spanClass) {
+                const replacement = `<span class="${spanClass}">${wordToHighlight}</span>`;
+                if (currentHTML.includes(wordToHighlight)) {
+                    currentHTML = currentHTML.replace(wordToHighlight, replacement);
+                } else {
+                    currentHTML = fullText.replace(wordToHighlight, replacement);
+                }
+            } else {
+                currentHTML = currentHTML.replace(new RegExp(`<span class="[^"]*">${wordToHighlight}</span>`, 'g'), wordToHighlight);
+            }
+
+            formattedDataStore[inputId] = currentHTML;
+            window.updatePreview(inputId);
+        };
+
+        window.removeHighlights = function(inputId) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            formattedDataStore[inputId] = input.value;
+            window.updatePreview(inputId);
+        };
+
+        window.updatePreview = function(inputId) {
+            const prev = document.getElementById(inputId + '-preview');
+            if (prev) {
+                const htmlContent = formattedDataStore[inputId] || document.getElementById(inputId)?.value || '';
+                prev.innerHTML = htmlContent || '<span style="color: #64748b; font-style: italic;">Preview will appear here...</span>';
+            }
+        };
+
+        document.getElementById('master-file-picker').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file && activeTargetInputId) {
+                const targetInput = document.getElementById(activeTargetInputId);
+                if (targetInput) {
+                    let relativePath = file.name;
+                    if (!relativePath.startsWith('videos/') && !relativePath.startsWith('http://') && !relativePath.startsWith('https://')) {
+                        relativePath = 'videos/' + relativePath;
+                    }
+                    targetInput.value = relativePath;
+                    targetInput.dispatchEvent(new Event('change'));
+                    targetInput.dispatchEvent(new Event('input'));
+                }
+            }
+        });
+
+        document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+            });
+        });
+
+        function populateForm() {
+            if (currentConfig.hero) {
+                document.getElementById('hero-badge-input').value = currentConfig.hero.badge || '';
+                initRichTextInput('hero-headline-input', currentConfig.hero.headlineHTML || '');
+                initRichTextInput('hero-subline-input', currentConfig.hero.sublineHTML || '');
+
+                if (currentConfig.hero.deck) {
+                    document.getElementById('deck-left-video').value = currentConfig.hero.deck.left?.video || '';
+                    document.getElementById('deck-center-video').value = currentConfig.hero.deck.center?.video || '';
+                    document.getElementById('deck-right-video').value = currentConfig.hero.deck.right?.video || '';
+                }
+            }
+
+            if (currentConfig.about) {
+                document.getElementById('about-kicker-input').value = currentConfig.about.kicker || '';
+                initRichTextInput('about-title-input', currentConfig.about.title || '');
+                initRichTextInput('about-text-input', currentConfig.about.text || '');
+            }
+
+            if (currentConfig.capabilitiesHeader) {
+                document.getElementById('services-kicker-input').value = currentConfig.capabilitiesHeader.kicker || '';
+                initRichTextInput('services-title-input', currentConfig.capabilitiesHeader.title || 'A Creative Engine Built For Scale');
+                initRichTextInput('services-subline-input', currentConfig.capabilitiesHeader.subline || 'Direct-response video framework engineered to scale ad spend efficiently across platforms.');
+            } else {
+                initRichTextInput('services-title-input', 'A Creative Engine Built For Scale');
+                initRichTextInput('services-subline-input', 'Direct-response video framework engineered to scale ad spend efficiently across platforms.');
+            }
+
+            if (currentConfig.vaultHeader) {
+                document.getElementById('vault-kicker-input').value = currentConfig.vaultHeader.kicker || '';
+                initRichTextInput('vault-title-input', currentConfig.vaultHeader.title || 'Creative Velocity & Testing');
+                initRichTextInput('vault-subline-input', currentConfig.vaultHeader.subline || 'Attention is finite. Creative testing requires speed. I combine nonlinear editing with integrated AI workflows to push variations faster, letting data dictate the final cut.');
+            } else {
+                document.getElementById('vault-kicker-input').value = 'THE CREATIVE VAULT';
+                initRichTextInput('vault-title-input', 'Creative Velocity & Testing');
+                initRichTextInput('vault-subline-input', 'Attention is finite. Creative testing requires speed. I combine nonlinear editing with integrated AI workflows to push variations faster, letting data dictate the final cut.');
+            }
+
+            if (currentConfig.ctaHeader) {
+                document.getElementById('cta-kicker-input').value = currentConfig.ctaHeader.kicker || '';
+                initRichTextInput('cta-title-input', currentConfig.ctaHeader.title || 'Let me <span class="highlight-cyan">Engineer</span> Your Next <span class="text-gradient shimmer-text">Winner.</span>');
+                initRichTextInput('cta-subline-input', currentConfig.ctaHeader.subline || 'Send me your raw footage or current ad campaign. I\'ll <span class="highlight-white">audit your hooks</span> and deliver <span class="highlight-cyan">high-converting cuts</span> built to scale.');
+                document.getElementById('cta-button-text-input').value = currentConfig.ctaHeader.buttonText || 'Start The Conversation';
+            } else {
+                document.getElementById('cta-kicker-input').value = 'READY TO SCALE YOUR CREATIVE?';
+                initRichTextInput('cta-title-input', 'Let me <span class="highlight-cyan">Engineer</span> Your Next <span class="text-gradient shimmer-text">Winner.</span>');
+                initRichTextInput('cta-subline-input', 'Send me your raw footage or current ad campaign. I\'ll <span class="highlight-white">audit your hooks</span> and deliver <span class="highlight-cyan">high-converting cuts</span> built to scale.');
+                document.getElementById('cta-button-text-input').value = 'Start The Conversation';
+            }
+
+            if (currentConfig.contact) {
+                document.getElementById('contact-email-input').value = currentConfig.contact.email || '';
+                document.getElementById('contact-calendly-input').value = currentConfig.contact.calendly || '';
+            }
+
+            renderMetricsRepeater();
+            renderProjectsRepeater();
+            renderServicesRepeater();
+            renderVaultRepeater();
+            renderReviewsRepeater();
+            renderSocialsRepeater();
+
+            ['hero-headline-input', 'hero-subline-input', 'about-title-input', 'about-text-input', 'services-title-input', 'services-subline-input', 'vault-title-input', 'vault-subline-input', 'cta-title-input', 'cta-subline-input'].forEach(id => {
+                if (window.updatePreview) window.updatePreview(id);
+            });
+        }
+
+        function renderMetricsRepeater() {
+            const container = document.getElementById('hero-metrics-repeater');
+            container.innerHTML = '';
+            (currentConfig.hero.metrics || []).forEach((m, idx) => {
+                const row = document.createElement('div');
+                row.className = 'repeater-box';
+                row.innerHTML = `
+                    <button class="delete-repeater-btn" onclick="removeMetric(${idx})">✕ Remove</button>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Value / Metric</label>
+                            <input type="text" value="${m.val}" onchange="currentConfig.hero.metrics[${idx}].val = this.value">
+                        </div>
+                        <div class="form-group">
+                            <label>Label</label>
+                            <input type="text" value="${m.lbl}" onchange="currentConfig.hero.metrics[${idx}].lbl = this.value">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        document.getElementById('add-metric-btn').addEventListener('click', () => {
+            if (!currentConfig.hero.metrics) currentConfig.hero.metrics = [];
+            currentConfig.hero.metrics.push({ val: "ROAS 5.0x", lbl: "Custom Metric" });
+            renderMetricsRepeater();
+        });
+
+        window.removeMetric = function(idx) {
+            currentConfig.hero.metrics.splice(idx, 1);
+            renderMetricsRepeater();
+        };
+
+        function renderProjectsRepeater() {
+            const container = document.getElementById('projects-repeater');
+            container.innerHTML = '';
+            (currentConfig.projects || []).forEach((proj, idx) => {
+                const box = document.createElement('div');
+                box.className = 'repeater-box';
+
+                let breakdownHTML = (proj.breakdown || []).map((b, bIdx) => `
+                    <div style="display:grid; grid-template-columns: 1.2fr 2fr; gap:1rem; margin-bottom:0.6rem;">
+                        <input type="text" value="${b.subtitle}" placeholder="Step (e.g. STEP 01 // HOOK)" onchange="currentConfig.projects[${idx}].breakdown[${bIdx}].subtitle = this.value">
+                        <input type="text" value="${b.text}" placeholder="Description" onchange="currentConfig.projects[${idx}].breakdown[${bIdx}].text = this.value">
+                    </div>
+                `).join('');
+
+                box.innerHTML = `
+                    <button class="delete-repeater-btn" onclick="removeProject(${idx})">✕ Delete Reel</button>
+                    <h4 style="color:#00F0FF; margin-bottom:1rem;">Project Reel #${idx + 1}</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" value="${proj.title}" onchange="currentConfig.projects[${idx}].title = this.value">
+                        </div>
+                        <div class="form-group">
+                            <label>Video Source</label>
+                            <div class="video-upload-box">
+                                <input type="text" id="proj-video-${idx}" value="${proj.video}" onchange="currentConfig.projects[${idx}].video = this.value">
+                                <button class="file-upload-btn" onclick="triggerFilePick('proj-video-${idx}')">📁 Choose from PC</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label>Breakdown Steps</label>
+                        ${breakdownHTML}
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        document.getElementById('add-project-btn').addEventListener('click', () => {
+            if (!currentConfig.projects) currentConfig.projects = [];
+            currentConfig.projects.push({
+                id: Date.now(),
+                title: "New DTC Performance Reel",
+                video: "videos/0510.mp4",
+                breakdown: [
+                    { subtitle: "STEP 01 // PATTERN INTERRUPT HOOK", text: "High-retention visual pattern interrupt." },
+                    { subtitle: "STEP 02 // CONVERSION PACING EDIT", text: "Nonlinear pacing designed to lower CAC." }
+                ]
+            });
+            renderProjectsRepeater();
+        });
+
+        window.removeProject = function(idx) {
+            currentConfig.projects.splice(idx, 1);
+            renderProjectsRepeater();
+        };
+
+        function renderServicesRepeater() {
+            const container = document.getElementById('services-repeater');
+            container.innerHTML = '';
+            (currentConfig.services || []).forEach((s, idx) => {
+                const box = document.createElement('div');
+                box.className = 'repeater-box';
+                box.innerHTML = `
+                    <button class="delete-repeater-btn" onclick="removeService(${idx})">✕ Remove</button>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Capability Title</label>
+                            <input type="text" value="${s.title}" onchange="currentConfig.services[${idx}].title = this.value">
+                        </div>
+                        <div class="form-group">
+                            <label>Icon Tag Text</label>
+                            <input type="text" value="${s.icon}" onchange="currentConfig.services[${idx}].icon = this.value">
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea onchange="currentConfig.services[${idx}].desc = this.value">${s.desc || ''}</textarea>
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        document.getElementById('add-service-btn').addEventListener('click', () => {
+            if (!currentConfig.services) currentConfig.services = [];
+            currentConfig.services.push({ title: "New Capability", icon: "Strategy", desc: "Capability details..." });
+            renderServicesRepeater();
+        });
+
+        window.removeService = function(idx) {
+            currentConfig.services.splice(idx, 1);
+            renderServicesRepeater();
+        };
+
+        function renderVaultRepeater() {
+            const container = document.getElementById('vault-repeater');
+            container.innerHTML = '';
+            (currentConfig.methodVideos || []).forEach((v, idx) => {
+                const row = document.createElement('div');
+                row.className = 'repeater-box';
+                row.innerHTML = `
+                    <button class="delete-repeater-btn" onclick="removeVault(${idx})">✕ Remove</button>
+                    <div class="form-group full">
+                        <label>Video File Path #${idx + 1}</label>
+                        <div class="video-upload-box">
+                            <input type="text" id="vault-video-${idx}" value="${v}" oninput="currentConfig.methodVideos[${idx}] = this.value" onchange="currentConfig.methodVideos[${idx}] = this.value">
+                            <button class="file-upload-btn" onclick="triggerFilePick('vault-video-${idx}')">📁 Choose from PC</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        document.getElementById('add-vault-btn').addEventListener('click', () => {
+            if (!currentConfig.methodVideos) currentConfig.methodVideos = [];
+            currentConfig.methodVideos.push("videos/0510.mp4");
+            renderVaultRepeater();
+        });
+
+        window.removeVault = function(idx) {
+            currentConfig.methodVideos.splice(idx, 1);
+            renderVaultRepeater();
+        };
+
+        function renderReviewsRepeater() {
+            const container = document.getElementById('reviews-repeater');
+            container.innerHTML = '';
+            (currentConfig.reviews || []).forEach((rev, idx) => {
+                const isVis = rev.visible !== false;
+                const box = document.createElement('div');
+                box.className = 'repeater-box';
+                box.innerHTML = `
+                    <button class="delete-repeater-btn" onclick="removeReview(${idx})">✕ Delete Review</button>
+                    <div style="margin-bottom:1rem;">
+                        <label class="visibility-toggle-label">
+                            <input type="checkbox" ${isVis ? 'checked' : ''} onchange="currentConfig.reviews[${idx}].visible = this.checked">
+                            <span>${isVis ? '👁️ Visible on Live Site' : '🙈 Hidden from Live Site'}</span>
+                        </label>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Client Name</label>
+                            <input type="text" value="${rev.clientName}" onchange="currentConfig.reviews[${idx}].clientName = this.value">
+                        </div>
+                        <div class="form-group">
+                            <label>Brand / Title</label>
+                            <input type="text" value="${rev.brand}" onchange="currentConfig.reviews[${idx}].brand = this.value">
+                        </div>
+                        <div class="form-group">
+                            <label>Star Rating (1-5)</label>
+                            <input type="number" min="1" max="5" value="${rev.rating || 5}" onchange="currentConfig.reviews[${idx}].rating = parseInt(this.value, 10)">
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label>Review Quote</label>
+                        <textarea onchange="currentConfig.reviews[${idx}].quote = this.value">${rev.quote}</textarea>
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        document.getElementById('add-review-btn').addEventListener('click', () => {
+            if (!currentConfig.reviews) currentConfig.reviews = [];
+            currentConfig.reviews.push({
+                id: Date.now(),
+                clientName: "New Client",
+                brand: "Founder, DTC Brand",
+                rating: 5,
+                quote: "Great performance video ad campaign!",
+                visible: true
+            });
+            renderReviewsRepeater();
+        });
+
+        window.removeReview = function(idx) {
+            currentConfig.reviews.splice(idx, 1);
+            renderReviewsRepeater();
+        };
+
+        function renderSocialsRepeater() {
+            const container = document.getElementById('socials-repeater');
+            container.innerHTML = '';
+            (currentConfig.socials || []).forEach((soc, idx) => {
+                const row = document.createElement('div');
+                row.className = 'repeater-box';
+                row.innerHTML = `
+                    <button class="delete-repeater-btn" onclick="removeSocial(${idx})">✕ Remove</button>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Platform Name</label>
+                            <input type="text" value="${soc.name}" onchange="currentConfig.socials[${idx}].name = this.value">
+                        </div>
+                        <div class="form-group">
+                            <label>URL</label>
+                            <input type="text" value="${soc.url}" onchange="currentConfig.socials[${idx}].url = this.value">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        document.getElementById('add-social-btn').addEventListener('click', () => {
+            if (!currentConfig.socials) currentConfig.socials = [];
+            currentConfig.socials.push({ name: "YouTube", url: "https://youtube.com" });
+            renderSocialsRepeater();
+        });
+
+        window.removeSocial = function(idx) {
+            currentConfig.socials.splice(idx, 1);
+            renderSocialsRepeater();
+        };
+
+        function collectData() {
+            if (!currentConfig.hero) currentConfig.hero = {};
+            const heroBadge = document.getElementById('hero-badge-input');
+            if (heroBadge) currentConfig.hero.badge = heroBadge.value;
+            
+            currentConfig.hero.headlineHTML = formattedDataStore['hero-headline-input'] || document.getElementById('hero-headline-input')?.value || '';
+            currentConfig.hero.sublineHTML = formattedDataStore['hero-subline-input'] || document.getElementById('hero-subline-input')?.value || '';
+
+            if (!currentConfig.hero.deck) currentConfig.hero.deck = { left: {}, center: {}, right: {} };
+            const dlv = document.getElementById('deck-left-video');
+            if (dlv) currentConfig.hero.deck.left.video = dlv.value;
+
+            const dcv = document.getElementById('deck-center-video');
+            if (dcv) currentConfig.hero.deck.center.video = dcv.value;
+
+            const drv = document.getElementById('deck-right-video');
+            if (drv) currentConfig.hero.deck.right.video = drv.value;
+
+            if (!currentConfig.about) currentConfig.about = {};
+            const ak = document.getElementById('about-kicker-input');
+            if (ak) currentConfig.about.kicker = ak.value;
+            currentConfig.about.title = formattedDataStore['about-title-input'] || document.getElementById('about-title-input')?.value || '';
+            currentConfig.about.text = formattedDataStore['about-text-input'] || document.getElementById('about-text-input')?.value || '';
+
+            if (!currentConfig.capabilitiesHeader) currentConfig.capabilitiesHeader = {};
+            const sk = document.getElementById('services-kicker-input');
+            const st = document.getElementById('services-title-input');
+            const ss = document.getElementById('services-subline-input');
+            if (sk) currentConfig.capabilitiesHeader.kicker = sk.value;
+            if (st) currentConfig.capabilitiesHeader.title = st.value;
+            if (ss) currentConfig.capabilitiesHeader.subline = ss.value;
+
+            if (!currentConfig.vaultHeader) currentConfig.vaultHeader = {};
+            const vk = document.getElementById('vault-kicker-input');
+            const vt = document.getElementById('vault-title-input');
+            const vs = document.getElementById('vault-subline-input');
+            if (vk) currentConfig.vaultHeader.kicker = vk.value;
+            if (vt) currentConfig.vaultHeader.title = vt.value;
+            if (vs) currentConfig.vaultHeader.subline = vs.value;
+
+            const vaultInputs = document.querySelectorAll('[id^="vault-video-"]');
+            if (vaultInputs.length > 0) {
+                currentConfig.methodVideos = Array.from(vaultInputs).map(inp => inp.value.trim()).filter(v => v.length > 0);
+            }
+
+            if (currentConfig.projects) {
+                currentConfig.projects.forEach((proj, pIdx) => {
+                    const pInp = document.getElementById(`proj-video-${pIdx}`);
+                    if (pInp) proj.video = pInp.value.trim();
+                });
+            }
+
+            if (!currentConfig.ctaHeader) currentConfig.ctaHeader = {};
+            const ctak = document.getElementById('cta-kicker-input');
+            const ctab = document.getElementById('cta-button-text-input');
+            if (ctak) currentConfig.ctaHeader.kicker = ctak.value;
+            currentConfig.ctaHeader.title = formattedDataStore['cta-title-input'] || document.getElementById('cta-title-input')?.value || '';
+            currentConfig.ctaHeader.subline = formattedDataStore['cta-subline-input'] || document.getElementById('cta-subline-input')?.value || '';
+            if (ctab) currentConfig.ctaHeader.buttonText = ctab.value;
+
+            if (!currentConfig.contact) currentConfig.contact = {};
+            const ce = document.getElementById('contact-email-input');
+            const cc = document.getElementById('contact-calendly-input');
+            if (ce) currentConfig.contact.email = ce.value;
+            if (cc) currentConfig.contact.calendly = cc.value;
+        }
+
+        document.getElementById('btn-save').addEventListener('click', () => {
+            collectData();
+            localStorage.setItem('my_site_config', JSON.stringify(currentConfig));
+            window.dispatchEvent(new Event('storage'));
+            
+            const toast = document.getElementById('toast');
+            toast.textContent = '✅ Changes Saved to Live Site!';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        });
+
+        document.getElementById('btn-export').addEventListener('click', () => {
+            collectData();
+            const fileContent = "const siteConfig = " + JSON.stringify(currentConfig, null, 4) + ";\n";
+            const blob = new Blob([fileContent], { type: "text/javascript" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "config.js";
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            if (confirm("Reset site data back to default configuration?")) {
+                localStorage.removeItem('my_site_config');
+                currentConfig = JSON.parse(JSON.stringify(typeof siteConfig !== 'undefined' ? siteConfig : {}));
+                populateForm();
+                alert("Site configuration reset to defaults!");
+            }
+        });
+
+        populateForm();
+    </script>
+</body>
+</html>
